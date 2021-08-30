@@ -6,8 +6,11 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [imgdata, setImgdata] = useState([]);
+  const [imagefile, setImageFile]=useState([]);
 
   const addImages = (e) => {
+    setImageFile(e.target.files);
+
     var result = Object.keys(e.target.files).map((key) => [
       e.target.files[key],
     ]);
@@ -18,8 +21,8 @@ function App() {
     var formData = new FormData();
     let date = new Date().toString().split(" ").join("").split("+");
     date = date[0].toString().split(":").join("");
-    if (imgdata.length == 1) {
-      formData.append("image", imgdata[0]);
+    if (imagefile.length == 1) {
+      formData.append("image", imagefile[0]);
       fetch("http://localhost:5000/api/v1/update", {
         method: "POST",
         body: formData,
@@ -32,8 +35,8 @@ function App() {
         .catch((err) => console.log(err));
     } else {
       console.log("hitting");
-      for (let i = 0; i < imgdata.length; i++) {
-        formData.append("image", imgdata[i]);
+      for (let i = 0; i < imagefile.length; i++) {
+        formData.append("image", imagefile[i]);
       }
       fetch("http://localhost:5000/api/v1/updates", {
         method: "POST",
