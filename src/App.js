@@ -12,14 +12,7 @@ function App() {
       e.target.files[key],
     ]);
     setImgdata(result.map((img) => URL.createObjectURL(img[0])));
-    // console.log(imgdata)
-    // setImddata(URL.createObjectURL(e.target.files[0]));
-    // console.log(imgdata);
   };
-
-  useEffect(() => {
-    console.log(imgdata);
-  }, [imgdata]);
 
   const handleSubmit = (e) => {
     var formData = new FormData();
@@ -33,7 +26,6 @@ function App() {
         headers: {
           Accept: "multipart/form-data",
         },
-        // credentials:'include',
       })
         .then((res) => res.blob())
         .then((blob) => saveAs(blob, date + ".docx"))
@@ -64,7 +56,6 @@ function App() {
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <input
             accept="image/*"
-            // style={{ display: "none" }}
             id="raised-button-file"
             name="image"
             type="file"
