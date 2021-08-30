@@ -1,12 +1,13 @@
 import "./App.css";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
+import Images from "./Components/images";
 import { saveAs } from "file-saver";
 import { useState, useEffect } from "react";
 
 function App() {
   const [imgdata, setImgdata] = useState([]);
-  const [imagefile, setImageFile]=useState([]);
+  const [imagefile, setImageFile] = useState([]);
 
   const addImages = (e) => {
     setImageFile(e.target.files);
@@ -76,11 +77,7 @@ function App() {
             className="btn btn-default"
           ></input>
         </form>
-        {imgdata.length
-          ? imgdata.map((img) => {
-             return <img src={img} key={img} alt={img} />;
-            })
-          : ""}
+        <Images imageList={imgdata} />
       </Container>
     </div>
   );
