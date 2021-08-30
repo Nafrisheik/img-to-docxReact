@@ -5,24 +5,29 @@ import { saveAs } from "file-saver";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [imgdata, setImddata] = useState([]);
+  const [imgdata, setImgdata] = useState([]);
 
   const addImages = (e) => {
-    setImddata(e.target.files);
+    var result = Object.keys(e.target.files).map((key) => [
+      e.target.files[key],
+    ]);
+    setImgdata(result.map((img) => URL.createObjectURL(img[0])));
+    // console.log(imgdata)
+    // setImddata(URL.createObjectURL(e.target.files[0]));
     // console.log(imgdata);
   };
 
   useEffect(() => {
-    console.log(imgdata.length);
+    console.log(imgdata);
   }, [imgdata]);
 
   const handleSubmit = (e) => {
     var formData = new FormData();
     let date = new Date().toString().split(" ").join("").split("+");
-date = date[0].toString().split(":").join("");
+    date = date[0].toString().split(":").join("");
     if (imgdata.length == 1) {
       formData.append("image", imgdata[0]);
-      fetch("http://localhost:8000/img/upload", {
+      fetch("http://localhost:5000/api/v1/update", {
         method: "POST",
         body: formData,
         headers: {
@@ -31,27 +36,24 @@ date = date[0].toString().split(":").join("");
         // credentials:'include',
       })
         .then((res) => res.blob())
-        .then((blob) => saveAs(blob, date+".docx"))
+        .then((blob) => saveAs(blob, date + ".docx"))
         .catch((err) => console.log(err));
-    } else{
+    } else {
       console.log("hitting");
-      for (let i = 0 ; i < imgdata.length ; i++) {
-          formData.append("image", imgdata[i]);
+      for (let i = 0; i < imgdata.length; i++) {
+        formData.append("image", imgdata[i]);
       }
-      // formData.append("image", imgdata);
-      fetch("http://localhost:8000/img/uploads", {
+      fetch("http://localhost:5000/api/v1/updates", {
         method: "POST",
         body: formData,
         headers: {
           Accept: "multipart/form-data",
         },
-        // credentials:'include',
       })
         .then((res) => res.blob())
-        .then((blob) => saveAs(blob, date+".docx"))
+        .then((blob) => saveAs(blob, date + ".docx"))
         .catch((err) => console.log(err));
-        e.preventDefault();
-
+      e.preventDefault();
     }
 
     e.preventDefault();
@@ -70,9 +72,9 @@ date = date[0].toString().split(":").join("");
             multiple
           />
           {/* <label htmlFor="raised-button-file"> */}
-            {/* <Button variant="raised" component="span"> */}
-              {/* Upload */}
-            {/* </Button> */}
+          {/* <Button variant="raised" component="span"> */}
+          {/* Upload */}
+          {/* </Button> */}
           {/* </label> */}
           <input
             type="submit"
@@ -80,11 +82,11 @@ date = date[0].toString().split(":").join("");
             className="btn btn-default"
           ></input>
         </form>
-        {imgdata.length ? (
-          <img src={imgdata[0].name} alt={imgdata[0].name} />
-        ) : (
-          ""
-        )}
+        {imgdata.length
+          ? imgdata.map((img) => {
+             return <img src={img} key={img} alt={img} />;
+            })
+          : ""}
       </Container>
     </div>
   );
