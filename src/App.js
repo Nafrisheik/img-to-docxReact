@@ -5,7 +5,7 @@ import Images from "./Components/images";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { saveAs } from "file-saver";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function App() {
   const [imgdata, setImgdata] = useState([]);
@@ -87,7 +87,7 @@ function App() {
             hidden
           ></input>
           <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
+        <Button variant="contained" color="primary" size="medium" component="span">
           Get docx
         </Button>
       </label>
