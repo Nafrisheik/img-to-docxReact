@@ -2,6 +2,8 @@ import "./App.css";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Images from "./Components/images";
+import IconButton from "@material-ui/core/IconButton";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { saveAs } from "file-saver";
 import { useState, useEffect } from "react";
 
@@ -65,17 +67,30 @@ function App() {
             type="file"
             onChange={addImages}
             multiple
+            hidden
           />
-          {/* <label htmlFor="raised-button-file"> */}
-          {/* <Button variant="raised" component="span"> */}
-          {/* Upload */}
-          {/* </Button> */}
-          {/* </label> */}
+          <label htmlFor="raised-button-file">
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+            >
+              {" "}
+              <PhotoCamera />{" "}
+            </IconButton>{" "}
+          </label>
           <input
             type="submit"
             value="Get docx"
+            id="contained-button-file"
             className="btn btn-default"
+            hidden
           ></input>
+          <label htmlFor="contained-button-file">
+        <Button variant="contained" color="primary" component="span">
+          Get docx
+        </Button>
+      </label>
         </form>
         <Images imageList={imgdata} />
       </Container>
