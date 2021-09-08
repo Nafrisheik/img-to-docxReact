@@ -28,7 +28,7 @@ function Images({imageList}) {
         ))}
       </ImageList>
     </div>
-                            )
+)
 }
 
 export default Images
